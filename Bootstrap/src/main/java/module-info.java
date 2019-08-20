@@ -1,0 +1,3 @@
+module bootstrap {
+    requires pointsBuilder;
+}
