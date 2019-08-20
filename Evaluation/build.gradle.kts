@@ -2,12 +2,9 @@ plugins {
     java
 }
 
-val moduleName by project.extra("bootstrap")
+val moduleName by project.extra("evaluation")
 
 dependencies {
     compile(project(":PointsBuilder"))
-    compile(project(":Evaluation"))
     testCompile("junit", "junit", "4.12")
 }
-
-

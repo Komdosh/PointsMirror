@@ -1,9 +1,10 @@
 rootProject.name = "PointsMirror"
 
-include("Bootstrap", "PointsBuilder")
+include("Bootstrap", "PointsBuilder", "Evaluation")
 
 val bootstrapProject = findProject(":Bootstrap")
 val pointsBuilderProject = findProject(":PointsBuilder")
+val evaluationProject = findProject(":Evaluation")
 
 pointsBuilderProject?.apply{
     name = "PointsBuilder"
@@ -11,4 +12,8 @@ pointsBuilderProject?.apply{
 
 bootstrapProject?.apply{
     name = "Bootstrap"
+}
+
+evaluationProject?.apply {
+    name = "Evaluation"
 }
