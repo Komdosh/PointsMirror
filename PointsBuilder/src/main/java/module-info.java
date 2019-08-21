@@ -1,5 +1,5 @@
 module pointsBuilder {
-    exports pro.komdosh.points.builder.model;
-    exports pro.komdosh.points.builder.api;
-    exports pro.komdosh.points.builder.implementation;
+    exports pro.komdosh.builder.model;
+    exports pro.komdosh.builder.api;
+    exports pro.komdosh.builder.implementation;
 }
