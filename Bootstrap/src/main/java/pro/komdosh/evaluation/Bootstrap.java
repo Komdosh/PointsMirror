@@ -9,9 +9,12 @@ import pro.komdosh.printer.implementation.PrinterImp;
 
 public class Bootstrap {
     public static void main(String[] args) {
-        PointsBuilder p = new PointsBuilderImp(10);
-        Evaluation e = new EvaluationImp();
-        Printer printer = new PrinterImp(p.getMirror());
-        printer.print();
+        for (int i = 0; i < 10000; ++i) {
+            PointsBuilder p = new PointsBuilderImp(10);
+            Evaluation e = new EvaluationImp(p.getMirror());
+            Printer printer = new PrinterImp(p.getMirror(), e.getVerticalMirrorLinePos(), e.getHorizontalMirrorLinePos());
+            printer.showOnlyExists();
+            printer.print();
+        }
     }
 }

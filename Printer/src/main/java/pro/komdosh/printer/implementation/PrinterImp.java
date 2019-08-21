@@ -4,24 +4,28 @@ package pro.komdosh.printer.implementation;
 import pro.komdosh.builder.model.Point;
 import pro.komdosh.printer.api.Printer;
 
-import java.util.IntSummaryStatistics;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
-import java.util.function.ToIntFunction;
+import java.util.function.ToDoubleFunction;
 
 public class PrinterImp implements Printer {
 
     private int width;
     private int height;
-    private int offsetX;
-    private int offsetY;
+    private double offsetX;
+    private double offsetY;
     private MatrixChars[][] matrix;
 
+    private double verticalPosition;
+    private double horizontalPosition;
+    private boolean showOnlyExists = false;
+
     public PrinterImp(List<Point> points) {
-        MatrixInfo infoWidth = getMatrixOffset(points, p -> p.x);
+        MatrixInfo infoWidth = getMatrixInfo(points, p -> p.x);
         width = infoWidth.getLength();
         offsetX = infoWidth.offset;
 
-        MatrixInfo infoHeight = getMatrixOffset(points, p -> p.y);
+        MatrixInfo infoHeight = getMatrixInfo(points, p -> p.y);
         height = infoHeight.getLength();
         offsetY = infoHeight.offset;
 
@@ -31,13 +35,25 @@ public class PrinterImp implements Printer {
 
     public PrinterImp(List<Point> points, int verticalLinePos) {
         this(points);
-        setVerticalLine(verticalLinePos);
+        if (verticalLinePos > -1) {
+            setVerticalLine(verticalLinePos);
+        }
     }
 
-    public PrinterImp(List<Point> points, int verticalLinePos, int horizontalLinePos) {
+    public PrinterImp(List<Point> points, double verticalLinePos, double horizontalLinePos) {
         this(points);
-        setVerticalLine(verticalLinePos);
-        setHorizontalLine(horizontalLinePos);
+        verticalPosition = verticalLinePos;
+        if (verticalLinePos > -1) {
+            setVerticalLine((int) verticalLinePos);
+        }
+        horizontalPosition = horizontalLinePos;
+        if (horizontalLinePos > -1) {
+            setHorizontalLine((int) horizontalLinePos);
+        }
+    }
+
+    public void showOnlyExists() {
+        this.showOnlyExists = true;
     }
 
     public void setVerticalLine(int pos) {
@@ -63,10 +79,18 @@ public class PrinterImp implements Printer {
 
     @Override
     public void print() {
+        if (showOnlyExists && verticalPosition == -1 && horizontalPosition == -1) {
+            return;
+        }
         System.out.println("=============================================");
+        System.out.println("-----");
+        System.out.printf("Vertical line exists: %b\n", verticalPosition != -1);
+        System.out.printf("Vertical line pos: %f\n", verticalPosition);
+        System.out.printf("Horizontal line exists: %b\n", horizontalPosition != -1);
+        System.out.printf("Horizontal line pos: %f\n", horizontalPosition);
+        System.out.println("-----");
 
         for (int row = 0; row < height; ++row) {
-            printYAxis(row, "%d  ");
             for (int column = 0; column < width; ++column) {
                 char printChar = ' ';
                 if (matrix[row][column] != null) {
@@ -75,35 +99,20 @@ public class PrinterImp implements Printer {
                 System.out.printf("%c  ", printChar);
             }
             System.out.println();
-
-            printXAxis(row);
         }
-        System.out.println("==============================================");
-    }
 
-    private void printYAxis(int row, String s) {
-        System.out.printf(s, row);
-    }
-
-    private void printXAxis(int row) {
-        if (row + 1 == height) {
-            System.out.printf("   ");
-            for (int column = 0; column < width; ++column) {
-                System.out.printf("%d  ", column);
-            }
-            System.out.println();
-        }
+        System.out.println("=============================================");
     }
 
     private void fillMatrix(MatrixChars[][] matrix, List<Point> points) {
-        points.forEach(p -> matrix[offsetY + p.y][offsetX + p.x] = MatrixChars.point);
+        points.forEach(p -> matrix[(int) (offsetY + p.y)][(int) (offsetX + p.x)] = MatrixChars.point);
     }
 
-    private MatrixInfo getMatrixOffset(List<Point> points, final ToIntFunction<Point> pointToIntFunction) {
-        IntSummaryStatistics stat = points.stream().mapToInt(pointToIntFunction).summaryStatistics();
-        int min = stat.getMin();
-        int max = stat.getMax();
-        final int minOffset = (min < 0 ? Math.abs(min) : min);
+    private MatrixInfo getMatrixInfo(List<Point> points, final ToDoubleFunction<Point> pointToDoubleFunction) {
+        DoubleSummaryStatistics stat = points.stream().mapToDouble(pointToDoubleFunction).summaryStatistics();
+        double min = stat.getMin();
+        double max = stat.getMax();
+        final double minOffset = (min < 0 ? Math.abs(min) : min);
         return new MatrixInfo(max, min, minOffset);
     }
 
@@ -118,18 +127,18 @@ public class PrinterImp implements Printer {
     }
 
     private static class MatrixInfo {
-        int max;
-        int min;
-        int offset;
+        double max;
+        double min;
+        double offset;
 
-        MatrixInfo(int max, int min, int offset) {
+        MatrixInfo(double max, double min, double offset) {
             this.max = max;
             this.min = min;
             this.offset = offset;
         }
 
         private int getLength() {
-            return max + offset + 1;
+            return (int) (max + offset) + 1;
         }
     }
 }

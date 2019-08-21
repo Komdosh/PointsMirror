@@ -6,4 +6,6 @@ public interface Printer {
     void setVerticalLine(int pos);
 
     void setHorizontalLine(int pos);
+
+    void showOnlyExists();
 }

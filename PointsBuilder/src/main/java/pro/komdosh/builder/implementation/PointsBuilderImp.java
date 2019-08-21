@@ -9,6 +9,8 @@ import java.util.List;
 
 public class PointsBuilderImp implements PointsBuilder {
     private int count;
+    private List<Point> random = new ArrayList<>();
+    private List<Point> mirror = new ArrayList<>();
 
     public PointsBuilderImp(int count) {
         this.count = count;
@@ -16,7 +18,10 @@ public class PointsBuilderImp implements PointsBuilder {
 
     @Override
     public List<Point> getRandom() {
-        return getRandom(count);
+        if (random.isEmpty()) {
+            random = getRandom(count);
+        }
+        return random;
     }
 
     private List<Point> getRandom(int count) {
@@ -29,7 +34,10 @@ public class PointsBuilderImp implements PointsBuilder {
 
     @Override
     public List<Point> getMirror() {
-        return getMirror(count);
+        if (mirror.isEmpty()) {
+            mirror = getMirror(count);
+        }
+        return mirror;
     }
 
     private List<Point> getMirror(int count) {
