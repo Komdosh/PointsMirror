@@ -17,6 +17,7 @@ allprojects {
                 if (JavaVersion.current() >= JavaVersion.VERSION_1_9) {
                     inputs.property("moduleName", project.extra["moduleName"])
                     doFirst {
+                        options.encoding = "UTF-8"
                         options.compilerArgs = listOf(
                                 // include Gradle dependencies as modules
                                 "--module-path", classpath.asPath
