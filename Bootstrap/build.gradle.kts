@@ -5,10 +5,10 @@ plugins {
 val moduleName by project.extra("bootstrap")
 
 dependencies {
-    compile(project(":PointsBuilder"))
-    compile(project(":Evaluation"))
-    compile(project(":Printer"))
-    testCompile("junit", "junit", "4.12")
+    implementation(project(":PointsBuilder"))
+    implementation(project(":Evaluation"))
+    implementation(project(":Printer"))
+    testCompileOnly("junit", "junit", "4.12")
 }
 
 

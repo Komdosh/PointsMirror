@@ -5,6 +5,6 @@ plugins {
 val moduleName by project.extra("printer")
 
 dependencies {
-    compile(project(":PointsBuilder"))
-    testCompile("junit", "junit", "4.12")
+    implementation(project(":PointsBuilder"))
+    testCompileOnly("junit", "junit", "4.12")
 }

@@ -2,6 +2,10 @@ plugins {
     java
 }
 
+java {
+    modularity.inferModulePath.set(true)
+}
+
 allprojects {
     group = "pro.komdosh"
     version = "0.0.1"

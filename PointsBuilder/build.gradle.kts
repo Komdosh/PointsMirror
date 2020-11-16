@@ -5,5 +5,5 @@ plugins {
 val moduleName by project.extra("pointsBuilder")
 
 dependencies {
-    testCompile("junit", "junit", "4.12")
+    testCompileOnly("junit", "junit", "4.12")
 }
