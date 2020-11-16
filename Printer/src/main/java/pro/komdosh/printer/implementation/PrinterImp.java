@@ -9,12 +9,11 @@ import java.util.List;
 import java.util.function.ToDoubleFunction;
 
 public class PrinterImp implements Printer {
-
-    private int width;
-    private int height;
-    private double offsetX;
-    private double offsetY;
-    private MatrixChars[][] matrix;
+    private final int width;
+    private final int height;
+    private final double offsetX;
+    private final double offsetY;
+    private final MatrixChars[][] matrix;
 
     private double verticalPosition;
     private double horizontalPosition;
@@ -58,19 +57,19 @@ public class PrinterImp implements Printer {
 
     public void setVerticalLine(int pos) {
         for (int row = 0; row < height; ++row) {
-            printLine(pos, row, MatrixChars.verticalLine, MatrixChars.verticalCross);
+            printLine(pos, row, MatrixChars.VERTICAL_LINE, MatrixChars.VERTICAL_CROSS);
         }
     }
 
     public void setHorizontalLine(int pos) {
         for (int column = 0; column < width; ++column) {
-            printLine(column, pos, MatrixChars.horizontalLine, MatrixChars.horizontalCross);
+            printLine(column, pos, MatrixChars.HORIZONTAL_LINE, MatrixChars.HORIZONTAL_CROSS);
         }
     }
 
     private void printLine(int column, int row, MatrixChars line, MatrixChars cross) {
         final MatrixChars[] matrixRow = this.matrix[row];
-        if (matrixRow[column] == MatrixChars.point) {
+        if (matrixRow[column] == MatrixChars.POINT) {
             matrixRow[column] = cross;
         } else {
             matrixRow[column] = line;
@@ -84,10 +83,10 @@ public class PrinterImp implements Printer {
         }
         System.out.println("=============================================");
         System.out.println("-----");
-        System.out.printf("Vertical line exists: %b\n", verticalPosition != -1);
-        System.out.printf("Vertical line pos: %f\n", verticalPosition);
-        System.out.printf("Horizontal line exists: %b\n", horizontalPosition != -1);
-        System.out.printf("Horizontal line pos: %f\n", horizontalPosition);
+        System.out.printf("Vertical line exists: %b%n", verticalPosition != -1);
+        System.out.printf("Vertical line pos: %f%n", verticalPosition);
+        System.out.printf("Horizontal line exists: %b%n", horizontalPosition != -1);
+        System.out.printf("Horizontal line pos: %f%n", horizontalPosition);
         System.out.println("-----");
 
         for (int row = 0; row < height; ++row) {
@@ -105,7 +104,7 @@ public class PrinterImp implements Printer {
     }
 
     private void fillMatrix(MatrixChars[][] matrix, List<Point> points) {
-        points.forEach(p -> matrix[(int) (offsetY + p.y)][(int) (offsetX + p.x)] = MatrixChars.point);
+        points.forEach(p -> matrix[(int) (offsetY + p.y)][(int) (offsetX + p.x)] = MatrixChars.POINT);
     }
 
     private MatrixInfo getMatrixInfo(List<Point> points, final ToDoubleFunction<Point> pointToDoubleFunction) {
@@ -117,7 +116,7 @@ public class PrinterImp implements Printer {
     }
 
     private enum MatrixChars {
-        empty(' '), point('*'), verticalLine('|'), horizontalLine('-'), verticalCross('+'), horizontalCross('+');
+        EMPTY(' '), POINT('*'), VERTICAL_LINE('|'), HORIZONTAL_LINE('-'), VERTICAL_CROSS('+'), HORIZONTAL_CROSS('+');
 
         private final char asChar;
 

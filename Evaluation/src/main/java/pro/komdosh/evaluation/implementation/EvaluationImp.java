@@ -8,8 +8,8 @@ import pro.komdosh.evaluation.api.VerticalEvaluation;
 import java.util.List;
 
 public class EvaluationImp implements Evaluation {
-    private VerticalEvaluation verticalEvaluation;
-    private HorizontalEvaluation horizontalEvaluation;
+    private final VerticalEvaluation verticalEvaluation;
+    private final HorizontalEvaluation horizontalEvaluation;
 
     public EvaluationImp(List<Point> points) {
         verticalEvaluation = new VerticalEvaluationImp(points);

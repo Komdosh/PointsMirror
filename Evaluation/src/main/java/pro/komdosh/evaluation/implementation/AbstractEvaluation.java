@@ -11,9 +11,9 @@ import java.util.function.ToDoubleFunction;
 
 public abstract class AbstractEvaluation {
     protected List<Point> points;
-    private LineDirection lineDirection;
-    private List<Point> left;
-    private List<Point> right;
+    private final LineDirection lineDirection;
+    private final List<Point> left;
+    private final List<Point> right;
     private double medianFromZero;
     private double median;
 

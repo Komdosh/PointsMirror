@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Point {
     private static final int RANDOM_BOUND = 10;
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
     public double x = 0;
     public double y = 0;

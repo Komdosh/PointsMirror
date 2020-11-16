@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PointsBuilderImp implements PointsBuilder {
-    private int count;
+    private final int count;
     private List<Point> random = new ArrayList<>();
     private List<Point> mirror = new ArrayList<>();
 
